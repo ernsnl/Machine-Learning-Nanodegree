@@ -11802,7 +11802,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries necessary for this project</span>
@@ -11900,7 +11900,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">minimum_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
@@ -11974,9 +11974,9 @@ Standard deviation of prices: $165171.13154429477
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ul>
-<li>Increase in 'RM' would lead to increase in 'MEDV'</li>
-<li>Increase in 'LSTAT' would lead to decrease in 'MEDV'</li>
-<li>Increase in 'PTRATIO' would lead to decrease in 'MEDV' </li>
+<li>Increase in 'RM' would lead to increase in 'MEDV'. Higher the room count means bigger the house.</li>
+<li>Increase in 'LSTAT' would lead to decrease in 'MEDV'. Lower class areas means it is more likely to be unsafe compared to other higher class neighborhoods </li>
+<li>Increase in 'PTRATIO' would lead to decrease in 'MEDV'. Higher the ratio can affect children education. TEacher may not be able spend enough time to properly educate the individual which will result in less demand from families with children.</li>
 </ul>
 
 </div>
@@ -12361,8 +12361,8 @@ Think about the pros and cons of adding more training points based on if the tra
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ul>
-<li>High Variance</li>
-<li>High Bias</li>
+<li><code>Depth 10: High Variance.</code> Our training score is near perfect however our model performs poorly because of the over fitting.</li>
+<li><code>Depth 1: High Bias.</code> Our current model over simplifies the problem in hand. Result of the underfitting can be seen by scores.</li>
 </ul>
 <p>We want training score and prediction score to be close to each other. When we train our model with <code>Depth:10</code>, our training model is prefect predicting everything correctly on our train split. However, after testing it, it preforms badly. Difference between scores is a clear indication of that.</p>
 
@@ -12424,8 +12424,7 @@ Think about the pros and cons of adding more training points based on if the tra
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ul>
-<li>Grid Search technique allows us to find optimal parameter values for our model.</li>
-<li>In a prediction model, multiple variables can affect the solution. Let's say we have two variables that are affecting the test score of our model. Let's call them X and Y. Multiple values can be used for X <code>[a,b,c,d,e]</code> and Y <code>[k,l]</code>. Grid search allow us to find the right combination for X, Y values so that our model can predict more accurately.</li>
+<li>GridSearch will find the best hyper parameters for the given model based on the some scorer function. This scorer function is usually uses training result as well as testing results. Grid in the gridSearch signifies the result of the given combination of the hyper paramaters' effect on the model training. </li>
 </ul>
 
 </div>
@@ -12453,8 +12452,13 @@ Think about the pros and cons of adding more training points based on if the tra
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ul>
-<li>Shuffle the data. Split that up to <code>k</code> groups. For each group, use the portion of the data to train the model, fit the model then retain the evolution score and discard the model. Summarize the skill of the model using evaluation scores.</li>
-<li>Grid search allow us to use testing accuracy to find optimal parameters for our learning model.</li>
+<li>Training set is split into <code>K</code> folds. We train our data with <code>K-1</code> and use the remaining fold to cross-validate our data. This step is repeated for <code>K</code> times each time we will use different cross validation. Cross validation score is used to check performance of the model.</li>
+<li>We use the cross validation score and gridSearch for determining the final performance of the model</li>
+</ul>
+<p>Benefits of k-fold cross-validation:</p>
+<ul>
+<li>More reliable performance than train/test split.</li>
+<li>Reduce the variance</li>
 </ul>
 
 </div>
@@ -12688,10 +12692,126 @@ Predicted selling price for Client 3&#39;s home: $931,636.36
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: </strong></p>
+<p><strong>Answer: </strong>
+Using the exploration values below, we can give an estimate for each client</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Maximum room: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;RM&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean room: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;RM&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Minimum room: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;RM&#39;</span><span class="p">]))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum room: 8.40
+Mean room: 6.24
+Minimum room: 3.56
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Maximum Poverty  Level: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Poverty Level: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Minimum Poverty Level: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">]))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum Poverty  Level: 37.97
+Mean Poverty Level: 12.94
+Minimum Poverty Level: 1.98
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Maximum Student to Teacher Ratio Level: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;PTRATIO&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Student to Teacher Ratio Level: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;PTRATIO&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Minimum Student to Teacher Ratio Level: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s1">&#39;PTRATIO&#39;</span><span class="p">]))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum Student to Teacher Ratio Level: 22.00
+Mean Student to Teacher Ratio Level: 18.52
+Minimum Student to Teacher Ratio Level: 12.60
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>For Clients: <strong> Client 1 =&gt; 420k </strong>, <strong> Client 2 =&gt; 250k </strong>, <strong> Client 3 =&gt; 950k </strong></li>
-<li>Smallest ratio and highest count of rooms should be close to the highest price. Vice versa. Also we should include the bargaining price :D</li>
+<li>Let's start with Client 3 who has the largest room in the given pool. Their house is located in better part of the neighborhood. We can see that clearly in ratio. House is in upper class neighborhood, student to teacher ratio is low. 
+For Client 3, estimate would be between $900K - $950K.</li>
+<li>Client 1's house is located in a neighborhood that is poorer than average. Ratio for the student to teacher is close to average of the data. Room count is lower than the average room count. For Client 1, estimate would be between $400K - $425K.</li>
+<li>Client 2's house is located in one of the poorest neighborhood. Its room count is below average and so close to the minimum number count. Ratio of students to teacher is minimum. For Client 2, estimate would be between $175K - $200K</li>
 </ul>
 
 </div>
@@ -12780,6 +12900,8 @@ Range in prices: $73,357.39
 <li>I don't think so. Rural city conditions would be different and parameters will change because of that.</li>
 <li>Neighborhood plays a significant factor in judging the price for individual home.</li>
 </ul>
+<p><strong>Answer for: In a few sentences, discuss whether the constructed model should or should not be used in a real-world setting. </strong>
+I think this data should be used in real world setting. Because it ignores other variables like crime rate, appliance availability (dishwasher, fridge), close to transportation etc. Like seen San Francisco, apartments with same square footage and same crime rate will have different prices because of how far the house is from public transportation.</p>
 
 </div>
 </div>
